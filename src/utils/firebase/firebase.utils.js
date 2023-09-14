@@ -6,6 +6,8 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
 } from "firebase/auth";
+
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -22,6 +24,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
+// SETTING UP: Firebase Authentication
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({
   prompt: "select_account",
@@ -29,3 +32,35 @@ provider.setCustomParameters({
 
 export const auth = getAuth();
 export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+
+// SETTING UP: Firebase Firestore DB
+export const db = getFirestore();
+
+// STORE AUTHENTICATED USERS
+export const createUserDocumentFromAuth = async (userAuth) => {
+  const userDocRef = doc(db, "users", userAuth.uid);
+
+  //   console.log("createUserDocumentFromAuth", userDocRef);
+
+  const userSnapshot = await getDoc(userDocRef);
+  //   console.log("userSnapshot", userSnapshot);
+  console.log("userSnapshot EXISTS", userSnapshot.exists());
+
+  // if user data !== 'exists'
+  if (!userSnapshot.exists()) {
+    const { displayName, email } = userAuth;
+    const createdAt = new Date();
+    try {
+      await setDoc(userDocRef, {
+        displayName,
+        email,
+        createdAt,
+      });
+    } catch (error) {
+      console.log("error creating user", error.message);
+    }
+  }
+  //   if (userSnapshot.exists)
+  // if user data === 'exists'
+  return userDocRef;
+};
