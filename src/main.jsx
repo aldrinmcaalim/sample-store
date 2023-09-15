@@ -9,7 +9,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./routes/home/Home.component.jsx";
 import Navigation from "./routes/navigation/Navigation.component.jsx";
 import Shop from "./routes/shop/Shop.component.jsx";
-import SignIn from "./routes/sign-in/SignIn.component";
+import Authentication from "./routes/authentication/Authentication.component";
 
 const router = createBrowserRouter([
   {
@@ -25,8 +25,8 @@ const router = createBrowserRouter([
         element: <Shop />,
       },
       {
-        path: "sign-in",
-        element: <SignIn />,
+        path: "auth",
+        element: <Authentication />,
       },
     ],
   },

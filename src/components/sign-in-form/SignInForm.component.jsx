@@ -1,11 +1,12 @@
 import { useState } from "react";
 
 // STYLE SHEET
-import "./sign-up-form.styles.scss";
+import "./sign-in-form.styles.scss";
 
 import {
-  createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
+  signInAuthUserWithEmailAndPassword,
+  signInWithGooglePopup,
 } from "../../utils/firebase/firebase.utils";
 
 // LOCAL COMPONENTS
@@ -13,17 +14,15 @@ import FormInput from "../form-input/FormInput.component";
 import Button from "../button/Button.component";
 
 const defaultFormFields = {
-  displayName: "",
   email: "",
   password: "",
-  confirmPassword: "",
 };
 
-const SignUpForm = () => {
+const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
-  const { displayName, email, password, confirmPassword } = formFields;
+  const { email, password } = formFields;
 
-  // console.log(formFields);
+  console.log(formFields);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -36,43 +35,34 @@ const SignUpForm = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (password !== confirmPassword) {
-      alert("Passwords do not match");
-      return;
-    }
+
     try {
-      const { user } = await createAuthUserWithEmailAndPassword(
+      const response = await signInAuthUserWithEmailAndPassword(
         email,
         password
       );
-      // console.log({ displayName });
-      await createUserDocumentFromAuth(user, {
-        displayName,
-      });
+      console.log(response);
       resetFormFields();
     } catch (error) {
-      if (error.code === "auth/email-already-in-use") {
-        alert("Cannot create user, email already in use");
+      if (error.code === "auth/invalid-login-credentials") {
+        alert("incorrect email/password combination");
+        return;
       }
-      console.error("user creation encountered an error", error);
+      console.log(error.code);
     }
+  };
+
+  const signInWithGoogle = async () => {
+    const { user } = await signInWithGooglePopup();
+    console.log(user);
+    await createUserDocumentFromAuth(user);
   };
 
   return (
     <div className="sign-up-container">
-      <h2>Don't have an account?</h2>
-      <span>Sign up with your email and password</span>
+      <h2>Already have an account?</h2>
+      <span>Sign in with your email and password</span>
       <form onSubmit={handleSubmit}>
-        <FormInput
-          label="Display Name"
-          inputOptions={{
-            type: "text",
-            required: true,
-            onChange: handleChange,
-            name: "displayName",
-            value: displayName,
-          }}
-        />
         <FormInput
           label="Email"
           inputOptions={{
@@ -93,20 +83,16 @@ const SignUpForm = () => {
             value: password,
           }}
         />
-        <FormInput
-          label="Confirm Password"
-          inputOptions={{
-            type: "password",
-            required: true,
-            onChange: handleChange,
-            name: "confirmPassword",
-            value: confirmPassword,
-          }}
-        />
-        <Button type="submit">Sign Up</Button>
+        <div className="buttons-container">
+          <Button type="submit">Sign In</Button>
+          {/* type='button' is needed since the default behavior or buttons in forms is to submit which, in our case, will activate the POST request of our form. to prevent that default behavior give any buttons in our form that we don't want to be associated with type='submit' action with type='button */}
+          <Button type="button" onClick={signInWithGoogle} buttonType="google">
+            Google sign in
+          </Button>
+        </div>
       </form>
     </div>
   );
 };
 
-export default SignUpForm;
+export default SignInForm;
