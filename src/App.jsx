@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const inventory = [
+const categories = [
   {
     id: 1,
     item: "hats",
@@ -25,7 +25,13 @@ const inventory = [
 function App() {
   return (
     <>
-      <h2>Hi</h2>
+      {
+        categories.map(category => {
+          return (
+            
+          )
+        })
+      }
     </>
   );
 }
