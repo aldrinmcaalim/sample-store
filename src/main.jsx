@@ -5,6 +5,9 @@ import "./index.scss";
 // 3rd party
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
+// contexts
+import { UserProvider } from "./contexts/User.context";
+
 // routes
 import Home from "./routes/home/Home.component.jsx";
 import Navigation from "./routes/navigation/Navigation.component.jsx";
@@ -33,6 +36,8 @@ const router = createBrowserRouter([
 ]);
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <UserProvider>
+      <RouterProvider router={router} />
+    </UserProvider>
   </React.StrictMode>
 );
