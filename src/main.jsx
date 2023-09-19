@@ -8,6 +8,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 // contexts
 import { UserProvider } from "./contexts/User.context";
 import { ProductsProvider } from "./contexts/Products.context";
+import { CartProvider } from "./contexts/Cart.context";
 
 // routes
 import Home from "./routes/home/Home.component.jsx";
@@ -41,7 +42,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <UserProvider>
       <ProductsProvider>
-        <RouterProvider router={router} />
+        <CartProvider>
+          <RouterProvider router={router} />
+        </CartProvider>
       </ProductsProvider>
     </UserProvider>
   </React.StrictMode>
