@@ -15,6 +15,7 @@ import Home from "./routes/home/Home.component.jsx";
 import Navigation from "./routes/navigation/Navigation.component.jsx";
 import Shop from "./routes/shop/Shop.component.jsx";
 import Authentication from "./routes/authentication/Authentication.component";
+import Checkout from "./routes/checkout/Checkout.component";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         path: "auth",
         element: <Authentication />,
+      },
+      {
+        path: "checkout",
+        element: <Checkout />,
       },
     ],
   },
