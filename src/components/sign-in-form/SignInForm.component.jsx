@@ -1,7 +1,10 @@
-import { useState } from "react";
+import {
+  SignUpContainer,
+  Title,
+  ButtonsContainer,
+} from "./sign-in-form.styles";
 
-// STYLE SHEET
-import "./sign-in-form.styles.scss";
+import { useState } from "react";
 
 import {
   createUserDocumentFromAuth,
@@ -11,7 +14,7 @@ import {
 
 // LOCAL COMPONENTS
 import FormInput from "../form-input/FormInput.component";
-import Button from "../button/Button.component";
+import Button, { BUTTON_TYPE_CLASSES } from "../button/Button.component";
 
 const defaultFormFields = {
   email: "",
@@ -56,8 +59,8 @@ const SignInForm = () => {
   };
 
   return (
-    <div className="sign-up-container">
-      <h2>Already have an account?</h2>
+    <SignUpContainer>
+      <Title>Already have an account?</Title>
       <span>Sign in with your email and password</span>
       <form onSubmit={handleSubmit}>
         <FormInput
@@ -80,15 +83,19 @@ const SignInForm = () => {
             value: password,
           }}
         />
-        <div className="buttons-container">
+        <ButtonsContainer>
           <Button type="submit">Sign In</Button>
           {/* type='button' is needed since the default behavior or buttons in forms is to submit which, in our case, will activate the POST request of our form. to prevent that default behavior give any buttons in our form that we don't want to be associated with type='submit' action with type='button */}
-          <Button type="button" onClick={signInWithGoogle} buttonType="google">
+          <Button
+            type="button"
+            onClick={signInWithGoogle}
+            buttonType={BUTTON_TYPE_CLASSES.google}
+          >
             Google sign in
           </Button>
-        </div>
+        </ButtonsContainer>
       </form>
-    </div>
+    </SignUpContainer>
   );
 };
 
