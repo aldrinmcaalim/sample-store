@@ -16,11 +16,11 @@ import { CategoriesProvider } from "./contexts/Categories.context";
 import { CartProvider } from "./contexts/Cart.context";
 
 // routes
-import Home from "./routes/home/Home.component.jsx";
-import Navigation from "./routes/navigation/Navigation.component.jsx";
-import Shop from "./routes/shop/Shop.component.jsx";
-import Authentication from "./routes/authentication/Authentication.component";
-import Checkout from "./routes/checkout/Checkout.component";
+// import Home from "./routes/home/Home.component.jsx";
+// import Navigation from "./routes/navigation/Navigation.component.jsx";
+// import Shop from "./routes/shop/Shop.component.jsx";
+// import Authentication from "./routes/authentication/Authentication.component";
+// import Checkout from "./routes/checkout/Checkout.component";
 
 // const router = createBrowserRouter([
 //   {
