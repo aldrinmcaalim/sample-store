@@ -10,6 +10,7 @@ const CategoriesPreview = () => {
     <Fragment>
       {Object.keys(categoriesMap).map((title) => {
         const products = categoriesMap[title];
+        console.log("prodhooo", products.length);
         return (
           <CategoryPreview key={title} title={title} products={products} />
         );
